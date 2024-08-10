@@ -2,9 +2,14 @@ module github.com/sandronister/socket-go
 
 go 1.22.4
 
-require github.com/spf13/viper v1.19.0
+require (
+	github.com/google/uuid v1.6.0
+	github.com/sandronister/go-broker v0.0.0-20240810181625-0ec4adc0e63e
+	github.com/spf13/viper v1.19.0
+)
 
 require (
+	github.com/confluentinc/confluent-kafka-go v1.9.2 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect

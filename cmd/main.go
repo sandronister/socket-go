@@ -1,21 +1,24 @@
 package main
 
 import (
-	"fmt"
-
+	"github.com/sandronister/go-broker/pkg/kafka"
 	"github.com/sandronister/socket-go/config"
+	"github.com/sandronister/socket-go/internal/infra/web"
+	"github.com/sandronister/socket-go/pkg/catch"
 )
 
 func main() {
-	config, err := config.LoadDevices("devices.json")
-	if err != nil {
-		fmt.Println(err)
-		return
+	conf, err := config.LoadConfig(".")
+	catch.Exception(err)
 
+	deviceConf, err := config.LoadDevices("devices.json")
+	catch.Exception(err)
+
+	broker := kafka.NewBroker(conf.Broker, conf.Port)
+
+	for _, device := range deviceConf.Devices {
+		server := web.NewServer(device.Name, device.Host, device.Topic, device.Port, broker)
+		go server.Start()
 	}
-	for _, device := range config.Devices {
-		fmt.Println(device)
-	}
-	// server := web.NewServer("localhost", "8080")
-	// server.Start()
+
 }
