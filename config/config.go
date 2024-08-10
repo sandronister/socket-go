@@ -1,38 +1,42 @@
 package config
 
 import (
-	"strings"
+	"encoding/json"
+	"fmt"
 
 	"github.com/spf13/viper"
 )
 
-type Conf struct {
-	Device map[string]string
+type Device struct {
+	Port  string `json:"port"`
+	Host  string `json:"host"`
+	Topic string `json:"topic"`
+	Name  string `json:"name"`
 }
 
-func LoadConfig(path string) (*Conf, error) {
-	viper.SetConfigName("config")
+type Conf struct {
+	Devices []Device `json:"devices"`
+}
+
+func LoadConfig() (*Conf, error) {
 	viper.SetConfigType("env")
-	viper.AddConfigPath(path)
 	viper.SetConfigFile(".env")
 	viper.AutomaticEnv()
 
 	err := viper.ReadInConfig()
 	if err != nil {
+		fmt.Println("Error reading config file")
 		return nil, err
 	}
 
-	mapEnv := viper.GetString("DEVICES")
-	mapData := make(map[string]string)
-	for _, v := range strings.Split(mapEnv, ",") {
-		split := strings.Split(v, ":")
-		if len(split) == 2 {
-			mapData[split[0]] = split[1]
-		}
+	devicesStr := viper.GetString("DEVICES")
+	var devices []Device
+	err = json.Unmarshal([]byte(devicesStr), &devices)
+	if err != nil {
+		return nil, err
 	}
 
 	return &Conf{
-		Device: mapData,
+		Devices: devices,
 	}, nil
-
 }

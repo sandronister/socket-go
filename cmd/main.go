@@ -7,14 +7,14 @@ import (
 )
 
 func main() {
-	config, err := config.LoadConfig(".")
+	config, err := config.LoadConfig()
 	if err != nil {
 		fmt.Println(err)
 		return
 
 	}
-	for k, v := range config.Device {
-		fmt.Printf("Key: %s, Value: %s\n", k, v)
+	for _, device := range config.Devices {
+		fmt.Println(device)
 	}
 	// server := web.NewServer("localhost", "8080")
 	// server.Start()
