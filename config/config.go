@@ -1,14 +1,16 @@
 package config
 
 import (
+	"strings"
+
 	"github.com/spf13/viper"
 )
 
 type Conf struct {
+	Device map[string]string
 }
 
 func LoadConfig(path string) (*Conf, error) {
-	var cfg *Conf
 	viper.SetConfigName("config")
 	viper.SetConfigType("env")
 	viper.AddConfigPath(path)
@@ -20,12 +22,17 @@ func LoadConfig(path string) (*Conf, error) {
 		return nil, err
 	}
 
-	err = viper.Unmarshal(&cfg)
-
-	if err != nil {
-		return nil, err
+	mapEnv := viper.GetString("DEVICES")
+	mapData := make(map[string]string)
+	for _, v := range strings.Split(mapEnv, ",") {
+		split := strings.Split(v, ":")
+		if len(split) == 2 {
+			mapData[split[0]] = split[1]
+		}
 	}
 
-	return cfg, nil
+	return &Conf{
+		Device: mapData,
+	}, nil
 
 }
