@@ -1,6 +1,8 @@
 package main
 
 import (
+	"sync"
+
 	"github.com/sandronister/go-broker/pkg/kafka"
 	"github.com/sandronister/socket-go/config"
 	"github.com/sandronister/socket-go/internal/infra/web"
@@ -16,9 +18,12 @@ func main() {
 
 	broker := kafka.NewBroker(conf.Broker, conf.Port)
 
+	waitGroup := sync.WaitGroup{}
+	waitGroup.Add(1)
 	for _, device := range deviceConf.Devices {
 		server := web.NewServer(device.Name, device.Host, device.Topic, device.Port, broker)
 		go server.Start()
 	}
+	waitGroup.Wait()
 
 }
