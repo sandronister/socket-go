@@ -2,9 +2,7 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
-
-	"github.com/spf13/viper"
+	"os"
 )
 
 type Device struct {
@@ -18,25 +16,17 @@ type Conf struct {
 	Devices []Device `json:"devices"`
 }
 
-func LoadConfig() (*Conf, error) {
-	viper.SetConfigType("env")
-	viper.SetConfigFile(".env")
-	viper.AutomaticEnv()
-
-	err := viper.ReadInConfig()
-	if err != nil {
-		fmt.Println("Error reading config file")
-		return nil, err
-	}
-
-	devicesStr := viper.GetString("DEVICES")
-	var devices []Device
-	err = json.Unmarshal([]byte(devicesStr), &devices)
+func LoadDevices(path string) (*Conf, error) {
+	fileContent, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 
-	return &Conf{
-		Devices: devices,
-	}, nil
+	var config Conf
+	err = json.Unmarshal(fileContent, &config)
+	if err != nil {
+		return nil, err
+	}
+
+	return &config, nil
 }

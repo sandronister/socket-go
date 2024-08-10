@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	config, err := config.LoadConfig()
+	config, err := config.LoadDevices("devices.json")
 	if err != nil {
 		fmt.Println(err)
 		return
