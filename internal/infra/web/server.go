@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/sandronister/go-broker/pkg/payload"
 	"github.com/sandronister/go-broker/pkg/ports"
+	"github.com/sandronister/socket-go/config"
 )
 
 type Server struct {
@@ -21,12 +22,12 @@ type Server struct {
 	broker ports.IBroker
 }
 
-func NewServer(name, host, topic, port string, broker ports.IBroker) *Server {
+func NewServer(device *config.Device, broker ports.IBroker) *Server {
 	return &Server{
-		name:   name,
-		host:   host,
-		port:   port,
-		topic:  topic,
+		name:   device.Name,
+		host:   device.Host,
+		port:   device.Port,
+		topic:  device.Topic,
 		broker: broker,
 	}
 }

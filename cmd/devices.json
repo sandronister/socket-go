@@ -1,19 +1,19 @@
 {
   "devices": [
     {
-      "port": "8080",
+      "port": "3005",
       "host": "localhost",
       "topic": "ruptela.com",
       "name": "ruptela"
     },
     {
-      "port": "8082",
+      "port": "3006",
       "host": "localhost",
       "topic": "omnicom.com",
       "name": "omnicom"
     },
     {
-      "port": "8083",
+      "port": "3007",
       "host": "localhost",
       "topic": "sinocastle.com",
       "name": "sinocastle"

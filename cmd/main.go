@@ -22,7 +22,7 @@ func main() {
 	waitGroup.Add(1)
 
 	for _, device := range deviceConf.Devices {
-		server := web.NewServer(device.Name, device.Host, device.Topic, device.Port, broker)
+		server := web.NewServer(&device, broker)
 		go server.Start()
 	}
 	waitGroup.Wait()
