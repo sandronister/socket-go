@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/sandronister/go-broker/pkg/payload"
-	"github.com/sandronister/go-broker/pkg/ports"
+	"github.com/sandronister/go_broker/pkg/payload"
+	"github.com/sandronister/go_broker/pkg/ports"
 	"github.com/sandronister/socket-go/config"
 )
 

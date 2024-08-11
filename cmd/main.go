@@ -3,7 +3,7 @@ package main
 import (
 	"sync"
 
-	"github.com/sandronister/go-broker/pkg/kafka"
+	"github.com/sandronister/go_broker/pkg/kafka"
 	"github.com/sandronister/socket-go/config"
 	"github.com/sandronister/socket-go/internal/infra/web"
 	"github.com/sandronister/socket-go/pkg/catch"
