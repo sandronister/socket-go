@@ -14,21 +14,23 @@ import (
 )
 
 type Server struct {
-	name   string
-	host   string
-	port   string
-	topic  string
-	conn   net.Conn
-	broker ports.IBroker
+	name      string
+	host      string
+	port      string
+	topic     string
+	conn      net.Conn
+	broker    ports.IBroker
+	timeFlush int
 }
 
 func NewServer(device *config.Device, broker ports.IBroker) *Server {
 	return &Server{
-		name:   device.Name,
-		host:   device.Host,
-		port:   device.Port,
-		topic:  device.Topic,
-		broker: broker,
+		name:      device.Name,
+		host:      device.Host,
+		port:      device.Port,
+		topic:     device.Topic,
+		broker:    broker,
+		timeFlush: device.TimeFlush,
 	}
 }
 
@@ -67,7 +69,7 @@ func (s *Server) GetPayload(msg string) *payload.Message {
 func (s *Server) Send(msg <-chan string) {
 	for item := range msg {
 		payload := s.GetPayload(item)
-		s.broker.Produce(payload, 1000)
+		s.broker.Produce(payload, s.timeFlush)
 	}
 }
 

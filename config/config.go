@@ -8,10 +8,11 @@ import (
 )
 
 type Device struct {
-	Port  string `json:"port"`
-	Host  string `json:"host"`
-	Topic string `json:"topic"`
-	Name  string `json:"name"`
+	Port      string `json:"port"`
+	Host      string `json:"host"`
+	Topic     string `json:"topic"`
+	Name      string `json:"name"`
+	TimeFlush int    `json:"timeFlush"`
 }
 
 type DeviceConf struct {
