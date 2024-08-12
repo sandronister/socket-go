@@ -4,19 +4,22 @@
       "port": "3005",
       "host": "localhost",
       "topic": "ruptela.com",
-      "name": "ruptela"
+      "name": "ruptela",
+      "timeFlush": 2000
     },
     {
       "port": "3006",
       "host": "localhost",
       "topic": "omnicom.com",
-      "name": "omnicom"
+      "name": "omnicom",
+      "timeFlush": 2000
     },
     {
       "port": "3007",
       "host": "localhost",
       "topic": "sinocastle.com",
-      "name": "sinocastle"
+      "name": "sinocastle",
+      "timeFlush": 2000
     }
   ]
 }
