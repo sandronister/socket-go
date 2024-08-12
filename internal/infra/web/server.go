@@ -78,7 +78,7 @@ func (s *Server) HandleConnection() {
 
 		if msg != "" {
 			payload := s.GetPayload(msg)
-			s.broker.Produce(payload)
+			s.broker.Produce(payload, 10)
 		}
 	}
 
