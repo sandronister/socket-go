@@ -64,11 +64,19 @@ func (s *Server) GetPayload(msg string) *payload.Message {
 	}
 }
 
+func (s *Server) Send(msg <-chan string) {
+	for item := range msg {
+		payload := s.GetPayload(item)
+		s.broker.Produce(payload, 1000)
+	}
+}
+
 func (s *Server) HandleConnection() {
 	defer s.conn.Close()
 	reader := bufio.NewReader(s.conn)
 
 	for {
+		chanMsg := make(chan string)
 		msg, err := reader.ReadString('\n')
 
 		if err != nil {
@@ -76,9 +84,12 @@ func (s *Server) HandleConnection() {
 			return
 		}
 
+		for range 1000 {
+			go s.Send(chanMsg)
+		}
+
 		if msg != "" {
-			payload := s.GetPayload(msg)
-			s.broker.Produce(payload, 10)
+			chanMsg <- msg
 		}
 	}
 
