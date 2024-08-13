@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/sandronister/go_broker/pkg/kafka"
+	"sync"
+
+	brokerredis "github.com/sandronister/go_broker/pkg/broker_redis"
 	"github.com/sandronister/socket-go/config"
 	"github.com/sandronister/socket-go/internal/infra/web"
 	"github.com/sandronister/socket-go/pkg/catch"
@@ -11,11 +13,14 @@ func main() {
 	conf, err := config.LoadConfig(".")
 	catch.Exception(err)
 
-	catch.Exception(err)
+	wg := sync.WaitGroup{}
+	wg.Add(1)
 
-	broker := kafka.NewBroker(conf.BROKER_HOST, conf.BROKER_PORT)
+	broker := brokerredis.NewBroker(conf.BROKER_HOST, conf.BROKER_PORT)
 
 	server := web.NewServer(conf, broker)
-	server.Start()
+	go server.Start()
+
+	wg.Wait()
 
 }
