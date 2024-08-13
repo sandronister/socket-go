@@ -12,10 +12,8 @@ MESSAGE2="Sua mensagem aqui ominicon"
 MESSAGE2="Sua mensagem aqui sinocastle"
 
 # Número de mensagens a serem enviadas
-NUM_MESSAGES=1000
+NUM_MESSAGES=10000
 
 for i in $(seq 1 $NUM_MESSAGES); do
   echo $MESSAGE $i| nc $SERVER_IP $SERVER_PORT
-  echo $MESSAGE2 $i| nc $SERVER_IP $SERVER_PORT2
-  echo $MESSAGE3 $i| nc $SERVER_IP $SERVER_PORT3
 done

@@ -14,7 +14,6 @@ import (
 )
 
 type Server struct {
-	name      string
 	host      string
 	port      string
 	topic     string
@@ -23,21 +22,20 @@ type Server struct {
 	timeFlush int
 }
 
-func NewServer(device *config.Device, broker ports.IBroker) *Server {
+func NewServer(conf *config.Conf, broker ports.IBroker) *Server {
 	return &Server{
-		name:      device.Name,
-		host:      device.Host,
-		port:      device.Port,
-		topic:     device.Topic,
+		host:      conf.SOCKET_HOST,
+		port:      conf.SOCKET_PORT,
+		topic:     conf.DEVICE_TOPIC,
 		broker:    broker,
-		timeFlush: device.TimeFlush,
+		timeFlush: conf.TIME_FLUSH * 1000,
 	}
 }
 
 func (s *Server) Start() {
 	listener, err := net.Listen("tcp", s.host+":"+s.port)
 
-	fmt.Println("Server started at", s.host+":"+s.port, "for", s.name)
+	fmt.Println("Server started at", s.host+":"+s.port, "for", s.topic)
 
 	if err != nil {
 		log.Fatal(err)
@@ -66,19 +64,12 @@ func (s *Server) GetPayload(msg string) *payload.Message {
 	}
 }
 
-func (s *Server) Send(msg <-chan string) {
-	for item := range msg {
-		payload := s.GetPayload(item)
-		s.broker.Produce(payload, s.timeFlush)
-	}
-}
-
 func (s *Server) HandleConnection() {
-	defer s.conn.Close()
-	reader := bufio.NewReader(s.conn)
 
+	reader := bufio.NewReader(s.conn)
+	defer s.conn.Close()
 	for {
-		chanMsg := make(chan string)
+
 		msg, err := reader.ReadString('\n')
 
 		if err != nil {
@@ -86,12 +77,9 @@ func (s *Server) HandleConnection() {
 			return
 		}
 
-		for range 1000 {
-			go s.Send(chanMsg)
-		}
-
 		if msg != "" {
-			chanMsg <- msg
+			payload := s.GetPayload(msg)
+			s.broker.Produce(payload, s.timeFlush)
 		}
 	}
 
