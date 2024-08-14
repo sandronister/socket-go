@@ -31,7 +31,7 @@ func NewServer(conf *config.Conf, broker ports.IBroker) *Server {
 		port:      conf.SOCKET_PORT,
 		topic:     conf.DEVICE_TOPIC,
 		broker:    broker,
-		timeFlush: conf.TIME_FLUSH * 1000,
+		timeFlush: conf.TIME_FLUSH,
 	}
 }
 
