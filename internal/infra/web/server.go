@@ -22,6 +22,9 @@ type Server struct {
 	timeFlush int
 }
 
+var i int = 1
+var start time.Time
+
 func NewServer(conf *config.Conf, broker ports.IBroker) *Server {
 	return &Server{
 		host:      conf.SOCKET_HOST,
@@ -50,6 +53,7 @@ func (s *Server) Start() {
 			log.Fatal(err)
 		}
 
+		start = time.Now()
 		go s.HandleConnection()
 
 	}
@@ -68,19 +72,30 @@ func (s *Server) HandleConnection() {
 
 	reader := bufio.NewReader(s.conn)
 	defer s.conn.Close()
+	total := 333
+
 	for {
 
 		msg, err := reader.ReadString('\n')
 
 		if err != nil {
-			log.Println(err)
 			return
 		}
 
 		if msg != "" {
 			payload := s.GetPayload(msg)
-			s.broker.Produce(payload, s.timeFlush)
+			err := s.broker.Produce(payload, s.timeFlush)
+			if err != nil {
+				log.Println(err)
+			}
+			i++
+			if i == total {
+				fmt.Printf("Total de mensagens enviadas: %d Tempo de execução: %s\n", i, fmt.Sprintf("%f", time.Since(start).Seconds()))
+				i = 1
+				start = time.Now()
+			}
 		}
+
 	}
 
 }
