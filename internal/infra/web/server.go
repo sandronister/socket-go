@@ -36,7 +36,9 @@ func NewServer(conf *config.Conf, broker ports.IBroker) *Server {
 }
 
 func (s *Server) Start() {
-	listener, err := net.Listen("tcp", s.host+":"+s.port)
+	address := s.getAddress()
+
+	listener, err := net.ListenTCP("tcp", address)
 
 	fmt.Println("Server started at", s.host+":"+s.port, "for", s.topic)
 
@@ -72,7 +74,7 @@ func (s *Server) HandleConnection() {
 
 	reader := bufio.NewReader(s.conn)
 	defer s.conn.Close()
-	total := 333
+	total := 1000
 
 	for {
 
