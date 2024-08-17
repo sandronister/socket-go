@@ -3,9 +3,8 @@ package main
 import (
 	"sync"
 
-	brokerredis "github.com/sandronister/go_broker/pkg/broker_redis"
 	"github.com/sandronister/socket-go/config"
-	"github.com/sandronister/socket-go/internal/infra/web"
+	"github.com/sandronister/socket-go/internal/di"
 	"github.com/sandronister/socket-go/pkg/catch"
 )
 
@@ -16,9 +15,7 @@ func main() {
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 
-	broker := brokerredis.NewBroker(conf.BROKER_HOST, conf.BROKER_PORT)
-
-	server := web.NewServer(conf, broker)
+	server := di.NewServer(conf)
 	go server.Start()
 
 	wg.Wait()
