@@ -1,14 +1,15 @@
 package web
 
 import (
-	"github.com/sandronister/socket-go/config"
+	"os"
+
 	"github.com/sandronister/socket-go/internal/infra/handler"
 )
 
-func NewServer(conf *config.Conf, handler handler.IHandler) *Server {
+func NewServer(handler handler.IHandler) *Server {
 	return &Server{
-		host:      conf.SOCKET_HOST,
-		port:      conf.SOCKET_PORT,
+		host:      os.Getenv("SOCKET_HOST"),
+		port:      os.Getenv("SOCKET_PORT"),
 		state:     STATE_SET_TIMEOUT,
 		nextState: STATE_SET_TIMEOUT,
 		handler:   handler,
