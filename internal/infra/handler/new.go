@@ -1,10 +1,12 @@
 package handler
 
-import "github.com/sandronister/go_broker/pkg/broker/types"
+import (
+	"github.com/sandronister/socket-go/internal/usecase"
+)
 
-func NewTcpHandler(broker types.IBroker, maxRetries int) *TcpHandler {
+func NewTcpHandler(usecase usecase.IUseCase, maxRetries int) *TcpHandler {
 	return &TcpHandler{
-		broker:     broker,
+		usecase:    usecase,
 		ReadBuffer: make([]byte, bufferMaxSize),
 		MaxRetries: maxRetries,
 		Retries:    0,

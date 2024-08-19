@@ -4,6 +4,7 @@ import (
 	"net/netip"
 
 	"github.com/sandronister/go_broker/pkg/broker/types"
+	"github.com/sandronister/socket-go/internal/usecase"
 )
 
 const bufferMaxSize = 1024
@@ -27,6 +28,7 @@ type IHandler interface {
 
 type TcpHandler struct {
 	broker     types.IBroker
+	usecase    usecase.IUseCase
 	ReadBuffer []byte
 	Retries    int
 	MaxRetries int

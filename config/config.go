@@ -11,6 +11,7 @@ type Conf struct {
 	SOCKET_PORT  string `mapstructure:"SOCKET_PORT"`
 	DEVICE_TOPIC string `mapstructure:"DEVICE_TOPIC"`
 	TIME_FLUSH   int    `mapstructure:"TIME_FLUSH"`
+	DatabaseURL  string `mapstructure:"DatabaseURL"`
 }
 
 func LoadConfig(path string) (*Conf, error) {

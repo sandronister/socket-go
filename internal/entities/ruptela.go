@@ -2,7 +2,9 @@ package entities
 
 import (
 	"bytes"
+	"crypto/md5"
 	"encoding/binary"
+	"encoding/hex"
 	"unsafe"
 )
 
@@ -17,11 +19,18 @@ type KeyCountRuptela struct {
 
 type Ruptela struct {
 	OriginalBuff []byte
+	Md5Str       string
 	Header       Header
 	Buffer       *bytes.Buffer
 	Ack          []byte
 	Success      bool
 	BytesReaded  uint32
+}
+
+func (r *Ruptela) SetMD5() {
+	hasher := md5.New()
+	hasher.Write(r.OriginalBuff)
+	r.Md5Str = hex.EncodeToString(hasher.Sum(nil))
 }
 
 func (r *Ruptela) Read1B(output *uint8) {

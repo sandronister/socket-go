@@ -1,22 +1,22 @@
 package usecase
 
 import (
-	"crypto/md5"
-	"encoding/hex"
-
+	"github.com/sandronister/go_broker/pkg/broker/types"
 	"github.com/sandronister/socket-go/internal/dto"
 	"github.com/sandronister/socket-go/internal/entities"
 	"github.com/sandronister/socket-go/internal/repositories"
 )
 
 type RuptelaUsecase struct {
-	DeviceRepo      repositories.IDeviceRepository
+	deviceRepo      repositories.IDeviceRepository
+	broker          types.IBroker
 	blackListDevice map[string]bool
 }
 
-func NewRuptelaUsecase(deviceRepo repositories.IDeviceRepository) *RuptelaUsecase {
+func NewRuptelaUsecase(deviceRepo repositories.IDeviceRepository, broker types.IBroker) *RuptelaUsecase {
 	r := &RuptelaUsecase{
-		DeviceRepo: deviceRepo,
+		deviceRepo: deviceRepo,
+		broker:     broker,
 	}
 
 	r.initBlackListDevice()
@@ -24,7 +24,7 @@ func NewRuptelaUsecase(deviceRepo repositories.IDeviceRepository) *RuptelaUsecas
 }
 
 func (u *RuptelaUsecase) initBlackListDevice() error {
-	result, err := u.DeviceRepo.GetBlackList()
+	result, err := u.deviceRepo.GetBlackList()
 
 	if err != nil {
 		return err
@@ -39,19 +39,12 @@ func (u *RuptelaUsecase) initBlackListDevice() error {
 	return nil
 }
 
-func (u *RuptelaUsecase) getMD5(buff []byte) string {
-	hasher := md5.New()
-	hasher.Write(buff)
-	return hex.EncodeToString(hasher.Sum(nil))
-}
-
 func (u *RuptelaUsecase) Handle(buff []byte) *dto.DeviceResponse {
-	md5Str := u.getMD5(buff)
-	u.DeviceRepo.SaveMessage(md5Str)
 	r := entities.Ruptela{
 		OriginalBuff: buff,
 	}
-
+	r.SetMD5()
+	u.deviceRepo.SaveMessage(r)
 	return &dto.DeviceResponse{
 		Error:          "",
 		Ack:            r.Ack,
