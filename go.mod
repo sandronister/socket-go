@@ -3,7 +3,6 @@ module github.com/sandronister/socket-go
 go 1.22.4
 
 require (
-	github.com/google/uuid v1.6.0
 	github.com/sandronister/go_broker v1.2.0
 	github.com/spf13/viper v1.19.0
 )
