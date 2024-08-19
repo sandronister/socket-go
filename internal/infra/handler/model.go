@@ -5,6 +5,7 @@ import (
 
 	"github.com/sandronister/go_broker/pkg/broker/types"
 	"github.com/sandronister/socket-go/internal/usecase"
+	"github.com/sandronister/socket-go/pkg/devices"
 )
 
 const bufferMaxSize = 1024
@@ -22,7 +23,7 @@ type TCPAddrInterface interface {
 }
 
 type IHandler interface {
-	Handle(conn TCPAddrInterface)
+	Handle(conn TCPAddrInterface) *devices.HandleResponse
 	ReadTCP(conn TCPAddrInterface) (int, error)
 }
 

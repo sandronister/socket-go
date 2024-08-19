@@ -4,6 +4,7 @@ import (
 	"net"
 
 	"github.com/sandronister/socket-go/internal/infra/handler"
+	"github.com/sandronister/socket-go/pkg/devices"
 )
 
 type ProtocolStates uint8
@@ -24,4 +25,5 @@ type Server struct {
 	state     ProtocolStates
 	nextState ProtocolStates
 	handler   handler.IHandler
+	response  *devices.HandleResponse
 }
