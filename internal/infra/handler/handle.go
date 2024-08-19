@@ -3,12 +3,12 @@ package handler
 import (
 	"bufio"
 
-	"github.com/sandronister/socket-go/pkg/devices"
+	"github.com/sandronister/socket-go/internal/dto"
 )
 
 var i int = 1
 
-func (h *TcpHandler) Handle(conn TCPAddrInterface) *devices.HandleResponse {
+func (h *TcpHandler) Handle(conn TCPAddrInterface) *dto.DeviceResponse {
 
 	reader := bufio.NewReader(conn)
 	defer conn.Close()
