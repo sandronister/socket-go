@@ -7,7 +7,7 @@ import (
 
 var i int = 1
 
-func (h *TcpHandler) Process(conn *net.TCPConn) {
+func (h *TcpHandler) Handle(conn *net.TCPConn) {
 
 	reader := bufio.NewReader(conn)
 	defer conn.Close()

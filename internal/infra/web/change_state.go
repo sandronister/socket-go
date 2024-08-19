@@ -1,6 +1,7 @@
 package web
 
 func (s *Server) ChangeState() {
+	defer s.Close()
 	switch s.state {
 	case STATE_SET_TIMEOUT:
 		s.timeoutState()

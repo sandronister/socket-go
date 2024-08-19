@@ -26,6 +26,6 @@ func (s *Server) readDataState() error {
 }
 
 func (s *Server) handleDataState() {
-	s.handler.Process(s.conn)
+	s.handler.Handle(s.conn)
 	s.nextState = STATE_CLOSE
 }
