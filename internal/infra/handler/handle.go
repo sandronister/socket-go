@@ -2,12 +2,11 @@ package handler
 
 import (
 	"bufio"
-	"net"
 )
 
 var i int = 1
 
-func (h *TcpHandler) Handle(conn *net.TCPConn) {
+func (h *TcpHandler) Handle(conn TCPAddrInterface) {
 
 	reader := bufio.NewReader(conn)
 	defer conn.Close()

@@ -5,7 +5,7 @@ import (
 	"github.com/sandronister/socket-go/internal/infra/handler"
 )
 
-func NewServer(conf *config.Conf, handler *handler.TcpHandler) *Server {
+func NewServer(conf *config.Conf, handler handler.IHandler) *Server {
 	return &Server{
 		host:      conf.SOCKET_HOST,
 		port:      conf.SOCKET_PORT,

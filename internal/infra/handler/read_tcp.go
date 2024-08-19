@@ -17,7 +17,7 @@ func (h *TcpHandler) tryError(err error) (int, error) {
 	return 0, nil
 }
 
-func (h *TcpHandler) ReadTCP(conn *net.TCPConn) (int, error) {
+func (h *TcpHandler) ReadTCP(conn TCPAddrInterface) (int, error) {
 	n, err := conn.Read(h.ReadBuffer)
 
 	if err != nil {

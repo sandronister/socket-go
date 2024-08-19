@@ -23,5 +23,5 @@ type Server struct {
 	conn      *net.TCPConn
 	state     ProtocolStates
 	nextState ProtocolStates
-	handler   *handler.TcpHandler
+	handler   handler.IHandler
 }
