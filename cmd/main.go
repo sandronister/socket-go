@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	_, err := config.LoadConfig(".")
+	err := config.LoadConfig(".env")
 	catch.Exception(err)
 
 	catch.Exception(err)
