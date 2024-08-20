@@ -1,4 +1,4 @@
-package entities
+package types
 
 type BlackListDevice struct {
 	Imei    string
