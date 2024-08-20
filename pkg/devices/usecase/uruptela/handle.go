@@ -6,7 +6,7 @@ import (
 )
 
 func (u *usecase_t) Handle(buff []byte) *dto.DeviceResponse {
-	r := ruptela.Device{}
+	r := ruptela.New(buff)
 	return &dto.DeviceResponse{
 		Error:          "",
 		Ack:            r.Ack,

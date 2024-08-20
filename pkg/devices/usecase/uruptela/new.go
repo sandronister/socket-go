@@ -15,7 +15,7 @@ func NewRuptelaUsecase(deviceRepo repositories.IDeviceRepository, broker types.I
 		},
 	}
 
-	r.InitBlackListDevice()
+	//r.InitBlackListDevice()
 
 	return r
 }

@@ -1,10 +1,14 @@
 package web
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 func (s *Server) ChangeState() {
 	defer s.Close()
 	for {
+		fmt.Println("Current state:", s.state)
 		switch s.state {
 		case STATE_SET_TIMEOUT:
 			s.timeoutState()
@@ -18,6 +22,7 @@ func (s *Server) ChangeState() {
 			time.Sleep(time.Microsecond * 10)
 			return
 		}
+		s.state = s.nextState
 	}
 
 }
