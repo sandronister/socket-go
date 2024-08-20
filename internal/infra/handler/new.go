@@ -1,8 +1,6 @@
 package handler
 
-import (
-	"github.com/sandronister/socket-go/internal/usecase"
-)
+import "github.com/sandronister/socket-go/pkg/devices/usecase"
 
 func NewTcpHandler(usecase usecase.IUseCase, maxRetries int) *TcpHandler {
 	return &TcpHandler{

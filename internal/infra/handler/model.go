@@ -5,7 +5,7 @@ import (
 
 	"github.com/sandronister/go_broker/pkg/broker/types"
 	"github.com/sandronister/socket-go/internal/dto"
-	"github.com/sandronister/socket-go/internal/usecase"
+	"github.com/sandronister/socket-go/pkg/devices/usecase"
 )
 
 const bufferMaxSize = 1024
