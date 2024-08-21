@@ -1,16 +1,20 @@
 package uruptela
 
 import (
+	"bytes"
+
 	"github.com/sandronister/socket-go/internal/dto"
 	"github.com/sandronister/socket-go/pkg/devices/entities/ruptela"
 )
 
-func (u *usecase_t) Handle(buff []byte) *dto.DeviceResponse {
+func (u *UseRuptela) Handle(buff []byte) *dto.DeviceResponse {
 	r := ruptela.New(buff)
+	r.Buffer = bytes.NewBuffer(buff)
+	behave, err := u.getParameter(r)
 	return &dto.DeviceResponse{
-		Error:          "",
+		Error:          *err,
 		Ack:            r.Ack,
-		ProtocolBehave: 0,
+		ProtocolBehave: behave,
 		Success:        r.Success,
 		Imei:           r.Header.Imei,
 	}

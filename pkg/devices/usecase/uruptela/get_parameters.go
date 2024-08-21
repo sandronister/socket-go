@@ -6,11 +6,12 @@ import (
 	"github.com/sandronister/socket-go/pkg/devices/entities/ruptela"
 )
 
-func (u *usecase_t) getParameter(device devices.IDevice) (customerrors.Error, devices.ProtocolBehave) {
-	cmd := device.ProcessHeader()
+func (u *UseRuptela) getParameter(device devices.IDevice) (devices.ProtocolBehave, *customerrors.Error) {
+	cmd := device.ProcessHeader(u.BlacklistSVC)
 
 	switch cmd {
 	case ruptela.COMMAND_DYNAMIC_IDENTFIC_PACKET:
-		return nil, devices.BEHAVE_REPLY_AND_KEEP_ALIVE
+		return devices.BEHAVE_REPLY_AND_KEEP_ALIVE, nil
 	}
+	return devices.BEHAVE_REPLY_AND_CLOSE_CONN, nil
 }

@@ -26,8 +26,8 @@ func (s *Server) readDataState() error {
 }
 
 func (s *Server) handleDataState() {
-	s.response = s.handler.Handle(s.conn)
-	s.nextState = STATE_CLOSE
+	s.response = s.handler.Handle()
+	s.nextState = STATE_SENDREPLY
 }
 
 func (s *Server) sendReplyState() {

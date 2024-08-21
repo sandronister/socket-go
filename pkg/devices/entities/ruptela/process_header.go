@@ -3,10 +3,11 @@ package ruptela
 import (
 	"strconv"
 
+	"github.com/sandronister/socket-go/pkg/devices/service"
 	"github.com/sandronister/socket-go/pkg/utils"
 )
 
-func (r *Device) ProcessHeader() TCommandProtocol {
+func (r *Device) ProcessHeader(blacklistSVC service.IBlackListService) TCommandProtocol {
 
 	var (
 		imei       uint64
@@ -28,6 +29,12 @@ func (r *Device) ProcessHeader() TCommandProtocol {
 		retCmd = COMMAND_UNKNOWN
 		r.Success = false
 
+	}
+
+	if blacklistSVC.IsBlackListed(r.Header.Imei) {
+		retCmd = COMMAND_GOBRAX_BLOCKED_IMEI
+		r.Ack = extSuccesAck
+		r.Success = false
 	}
 
 	return retCmd

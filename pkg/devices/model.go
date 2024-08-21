@@ -3,6 +3,7 @@ package devices
 import (
 	customerrors "github.com/sandronister/socket-go/pkg/devices/custom_errors"
 	"github.com/sandronister/socket-go/pkg/devices/entities/ruptela"
+	"github.com/sandronister/socket-go/pkg/devices/service"
 )
 
 type ProtocolBehave uint8
@@ -18,5 +19,5 @@ type IDevice interface {
 	IsValidHeader() *customerrors.Error
 	IsValidImei() bool
 	IsValidCommand() bool
-	ProcessHeader() ruptela.TCommandProtocol
+	ProcessHeader(blacklist service.IBlackListService) ruptela.TCommandProtocol
 }

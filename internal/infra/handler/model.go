@@ -23,13 +23,13 @@ type TCPAddrInterface interface {
 }
 
 type IHandler interface {
-	Handle(conn TCPAddrInterface) *dto.DeviceResponse
+	Handle() *dto.DeviceResponse
 	ReadTCP(conn TCPAddrInterface) (int, error)
 }
 
 type TcpHandler struct {
 	broker     types.IBroker
-	usecase    usecase.IUseCase
+	udevice    usecase.IDeviceUseCase
 	ReadBuffer []byte
 	Retries    int
 	MaxRetries int
