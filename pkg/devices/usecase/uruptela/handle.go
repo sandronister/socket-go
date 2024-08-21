@@ -12,7 +12,7 @@ func (u *UseRuptela) Handle(buff []byte) *dto.DeviceResponse {
 	r.Buffer = bytes.NewBuffer(buff)
 	behave, err := u.getParameter(r)
 	return &dto.DeviceResponse{
-		Error:          *err,
+		Error:          err,
 		Ack:            r.Ack,
 		ProtocolBehave: behave,
 		Success:        r.Success,

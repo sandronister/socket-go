@@ -6,7 +6,7 @@ import (
 )
 
 type DeviceResponse struct {
-	Error          customerrors.Error
+	Error          *customerrors.Error
 	Ack            []byte
 	ProtocolBehave devices.ProtocolBehave
 	Success        bool
