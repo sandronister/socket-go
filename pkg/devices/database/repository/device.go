@@ -1,15 +1,15 @@
 package repository
 
 import (
-	"github.com/go-pg/pg"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/sandronister/socket-go/pkg/devices/types"
 )
 
 type DeviceRepository struct {
-	conn *pg.DB
+	conn *pgxpool.Pool
 }
 
-func NewDeviceRepository(conn *pg.DB) *DeviceRepository {
+func NewDeviceRepository(conn *pgxpool.Pool) *DeviceRepository {
 	return &DeviceRepository{conn: conn}
 }
 
