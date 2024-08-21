@@ -20,4 +20,8 @@ type IDevice interface {
 	IsValidImei() bool
 	IsValidCommand() bool
 	ProcessHeader(blacklist service.IBlackListService) ruptela.TCommandProtocol
+	ProcessDynamic() *customerrors.Error
+	ProcessDTC() *customerrors.Error
+	ProcessExtended() *customerrors.Error
+	SetSuccess(bool)
 }

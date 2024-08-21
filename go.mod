@@ -3,9 +3,13 @@ module github.com/sandronister/socket-go
 go 1.22.4
 
 require (
+	dario.cat/mergo v1.0.1
+	github.com/getrak/crc16 v1.0.0
+	github.com/google/uuid v1.4.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/joho/godotenv v1.5.1
 	github.com/sandronister/go_broker v1.2.0
+	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.19.0
 )
 
@@ -24,6 +28,7 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/pgtype v1.14.0 // indirect
 	github.com/jackc/puddle v1.3.0 // indirect
+	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect

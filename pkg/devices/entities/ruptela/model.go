@@ -1,9 +1,17 @@
 package ruptela
 
-import "github.com/sandronister/socket-go/pkg/devices/entities/abstract"
+import (
+	"github.com/sandronister/socket-go/pkg/devices/entities"
+	"github.com/sandronister/socket-go/pkg/devices/entities/abstract"
+)
 
-var extSuccesAck = []uint8{0x00, 0x02, 0x64, 0x01, 0x13, 0xbc} //{0x00, 0x02, 0x64, 0x01, 0x13, 0xbc}
-var extSuccesNack = []uint8{0x00, 0x02, 0x64, 0x00, 0x2, 0x35}
+var (
+	extSuccessAck        = []uint8{0x00, 0x02, 0x64, 0x01, 0x13, 0xbc}
+	extSuccessNack       = []uint8{0x00, 0x02, 0x64, 0x00, 0x2, 0x35}
+	defaultDtcSuccessAck = []byte{0x00, 0x02, 0x6D, 0x01, 0xc4, 0xa4}
+	dyn_DispAllowed      = []byte{0x00, 0x02, 0x73, 0x01, 0xcb, 0x25}
+	dyn_DispNotAllowed   = []byte{0x00, 0x02, 0x73, 0x02, 0xb4, 0xa3}
+)
 
 type KeyCountRuptela struct {
 	Data  string
@@ -20,9 +28,13 @@ type Header struct {
 
 type Device struct {
 	abstract.Device
-	Header  Header
-	Ack     []byte
-	Success bool
+	Header        Header
+	Ack           []byte
+	Success       bool
+	Sensors       []*entities.TSensor
+	Parameter     *entities.TParameters
+	Parameters    []*entities.TParameters
+	DtcParameters *entities.TDtcParameters
 }
 
 type TCommandProtocol uint8

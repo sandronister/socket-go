@@ -33,7 +33,7 @@ func (r *Device) ProcessHeader(blacklistSVC service.IBlackListService) TCommandP
 
 	if blacklistSVC.IsBlackListed(r.Header.Imei) {
 		retCmd = COMMAND_GOBRAX_BLOCKED_IMEI
-		r.Ack = extSuccesAck
+		r.Ack = extSuccessAck
 		r.Success = false
 	}
 

@@ -11,7 +11,18 @@ func (u *UseRuptela) getParameter(device devices.IDevice) (devices.ProtocolBehav
 
 	switch cmd {
 	case ruptela.COMMAND_DYNAMIC_IDENTFIC_PACKET:
-		return devices.BEHAVE_REPLY_AND_KEEP_ALIVE, nil
+		return devices.BEHAVE_REPLY_AND_KEEP_ALIVE, device.ProcessDynamic()
+
+	case ruptela.COMMAND_DIAGNOSTIC_TROUBLE_CODES:
+		return devices.BEHAVE_REPLY_AND_CLOSE_CONN, device.ProcessDTC()
+
+	case ruptela.COMMAND_EXTENDED_PROTOCOL_RECORDS:
+		return devices.BEHAVE_REPLY_AND_CLOSE_CONN, device.ProcessExtended()
+
+	case ruptela.COMMAND_GOBRAX_BLOCKED_IMEI:
+		device.SetSuccess(true)
+		return devices.BEHAVE_REPLY_AND_CLOSE_CONN, &customerrors.ErrBlockedImei
+
 	}
-	return devices.BEHAVE_REPLY_AND_CLOSE_CONN, nil
+	return devices.BEHAVE_REPLY_AND_CLOSE_CONN, &customerrors.ErrInvalidCommand
 }
