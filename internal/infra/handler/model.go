@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/netip"
+	"time"
 
 	"github.com/sandronister/go_broker/pkg/broker/types"
 	"github.com/sandronister/socket-go/internal/dto"
@@ -18,13 +19,14 @@ type AddrPortInterface interface {
 }
 
 type TCPAddrInterface interface {
-	Read(p []byte) (n int, err error)
+	Read(b []byte) (n int, err error)
 	Close() error
+	SetReadDeadline(t time.Time) error
 }
 
 type IHandler interface {
 	Handle() *dto.DeviceResponse
-	ReadTCP(conn TCPAddrInterface) (int, error)
+	ReadTCP(conn TCPAddrInterface) ([]byte, error)
 }
 
 type TcpHandler struct {

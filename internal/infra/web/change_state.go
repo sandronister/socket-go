@@ -20,6 +20,8 @@ func (s *Server) ChangeState() {
 			s.sendReplyState()
 		case STATE_CLOSE:
 			time.Sleep(time.Microsecond * 10)
+			s.state = STATE_SET_TIMEOUT
+			s.nextState = STATE_SET_TIMEOUT
 			return
 		}
 		s.state = s.nextState

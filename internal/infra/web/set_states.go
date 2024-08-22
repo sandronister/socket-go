@@ -21,7 +21,7 @@ func (s *Server) readDataState() error {
 		return err
 	}
 	fmt.Printf("Read %d bytes\n", n)
-	if n > 0 {
+	if n != nil {
 		s.nextState = STATE_HANDLEDATA
 	}
 	return nil

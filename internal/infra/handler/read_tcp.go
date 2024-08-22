@@ -2,32 +2,33 @@ package handler
 
 import (
 	"net"
+	"time"
 )
 
-func (h *TcpHandler) tryError(err error) (int, error) {
-	opErr, ok := err.(*net.OpError)
+func (h *TcpHandler) ReadTCP(conn TCPAddrInterface) ([]byte, error) {
+	buffer := make([]byte, 1024)
+	totalBytesRead := 0
 
-	if ok && opErr.Timeout() {
-		h.Retries++
-		if h.Retries >= h.MaxRetries {
-			return 0, err
+	for {
+		conn.SetReadDeadline(time.Now().Add(5 * time.Second))
+		bytesRead, err := conn.Read(buffer[totalBytesRead:])
+		if err != nil {
+			opErr, ok := err.(*net.OpError)
+			if ok && opErr.Timeout() {
+				h.Retries++
+				if h.Retries >= h.MaxRetries {
+					return nil, err
+				}
+				continue
+			}
+			return nil, err
+		}
+		totalBytesRead += bytesRead
+		if bytesRead == 0 {
+			break
 		}
 	}
 
-	return 0, nil
-}
-
-func (h *TcpHandler) ReadTCP(conn TCPAddrInterface) (int, error) {
-	n, err := conn.Read(h.ReadBuffer)
-
-	if err != nil {
-		res, errorOp := h.tryError(err)
-
-		if errorOp != nil {
-			return res, errorOp
-		}
-	}
-
-	return n, nil
+	return buffer[:totalBytesRead], nil
 
 }
