@@ -28,9 +28,7 @@ func (s *Server) Start() {
 		}
 
 		s.conn.SetDeadline(time.Now().Add(10 * time.Second))
-		for range 100 {
-			go s.ChangeState()
-		}
+		s.Handle()
 
 	}
 }

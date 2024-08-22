@@ -28,6 +28,7 @@ type IHandler interface {
 	Handle() *dto.DeviceResponse
 	ReadTCP(conn TCPAddrInterface) (int, error)
 	ClearBuffer()
+	SetBuffer(buffer []byte)
 }
 
 type TcpHandler struct {
