@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func (h *TcpHandler) ReadTCP(conn TCPAddrInterface) ([]byte, error) {
+func (h *TcpHandler) ReadTCP(conn TCPAddrInterface) (int, error) {
 	buffer := make([]byte, 1024)
 	totalBytesRead := 0
 
@@ -17,11 +17,11 @@ func (h *TcpHandler) ReadTCP(conn TCPAddrInterface) ([]byte, error) {
 			if ok && opErr.Timeout() {
 				h.Retries++
 				if h.Retries >= h.MaxRetries {
-					return nil, err
+					return 0, err
 				}
 				continue
 			}
-			return nil, err
+			return 0, err
 		}
 		totalBytesRead += bytesRead
 		if bytesRead == 0 {
@@ -29,6 +29,7 @@ func (h *TcpHandler) ReadTCP(conn TCPAddrInterface) ([]byte, error) {
 		}
 	}
 
-	return buffer[:totalBytesRead], nil
+	h.ReadBuffer = buffer[:totalBytesRead]
+	return totalBytesRead, nil
 
 }

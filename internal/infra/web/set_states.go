@@ -19,7 +19,7 @@ func (s *Server) readDataState() error {
 		s.nextState = STATE_CLOSE
 		return err
 	}
-	if n != nil {
+	if n > 0 {
 		s.nextState = STATE_HANDLEDATA
 	}
 	return nil

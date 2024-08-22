@@ -26,7 +26,7 @@ type TCPAddrInterface interface {
 
 type IHandler interface {
 	Handle() *dto.DeviceResponse
-	ReadTCP(conn TCPAddrInterface) ([]byte, error)
+	ReadTCP(conn TCPAddrInterface) (int, error)
 	ClearBuffer()
 }
 
