@@ -32,7 +32,7 @@ func (s *Server) handleDataState() {
 
 func (s *Server) sendReplyState() {
 	s.nextState = STATE_CLOSE
-	n, err := s.conn.Write((s.response.Ack))
+	n, err := s.conn.Write(s.response.Ack)
 
 	if err == nil || n > 0 {
 		s.nextState = STATE_READDATA
