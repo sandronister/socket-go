@@ -1,7 +1,6 @@
 package web
 
 import (
-	"fmt"
 	"log"
 	"time"
 )
@@ -20,7 +19,6 @@ func (s *Server) readDataState() error {
 		s.nextState = STATE_CLOSE
 		return err
 	}
-	fmt.Printf("Read %d bytes\n", n)
 	if n != nil {
 		s.nextState = STATE_HANDLEDATA
 	}
