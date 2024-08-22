@@ -26,6 +26,7 @@ func (s *Server) ChangeState() {
 			time.Sleep(time.Microsecond * 10)
 			s.handler.ClearBuffer()
 			fmt.Println("Closing connection", i)
+			i = 0
 			return
 		}
 		s.state = s.nextState
