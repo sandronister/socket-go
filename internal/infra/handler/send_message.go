@@ -11,7 +11,7 @@ import (
 func (h *TcpHandler) SendMessage(msg []byte) {
 	payload := &types.Message{
 		Value:     []byte(msg),
-		Key:       []byte(fmt.Sprintf("%d", i)),
+		Key:       []byte(fmt.Sprintf("%d", time.Now().Unix())),
 		Timestamp: time.Now(),
 	}
 
