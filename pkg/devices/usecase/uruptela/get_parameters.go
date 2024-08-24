@@ -6,8 +6,7 @@ import (
 	"github.com/sandronister/socket-go/pkg/devices/entities/ruptela"
 )
 
-func (u *UseRuptela) getParameter(device devices.IDevice) (devices.ProtocolBehave, *customerrors.Error) {
-	cmd := device.ProcessHeader(u.BlacklistSVC)
+func (u *UseRuptela) getParameter(device devices.IDevice, cmd ruptela.TCommandProtocol) (devices.ProtocolBehave, *customerrors.Error) {
 
 	switch cmd {
 	case ruptela.COMMAND_DYNAMIC_IDENTFIC_PACKET:
