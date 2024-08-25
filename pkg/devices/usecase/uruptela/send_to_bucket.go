@@ -27,7 +27,7 @@ func (u *UseRuptela) SendToBucket(device devices.IDevice) {
 		dataFolder := time.Now().Format("2006-01-02")
 		name := uuid.New().String()
 
-		res, err := bucket.PutObject(&types.ObjectInput{
+		_, err := bucket.PutObject(&types.ObjectInput{
 			Bucket: os.Getenv("BUCKET_NAME"),
 			Key:    fmt.Sprintf("ruptela/%s/%s/%s.bin", device.GetImei(), dataFolder, name),
 			Body:   bytes.NewReader(device.GetBuffer()),
@@ -36,11 +36,6 @@ func (u *UseRuptela) SendToBucket(device devices.IDevice) {
 		if err != nil {
 			log.Println(err)
 		}
-
-		fmt.Println("****************************************")
-		fmt.Println(os.Getenv("BUCKET_NAME"))
-		fmt.Println(res, "--------------------------------------")
-
 	}
 
 }
