@@ -26,4 +26,5 @@ type IDevice interface {
 	SetSuccess(bool)
 	GetImei() string
 	GetBuffer() []byte
+	ToBytes() ([]byte, error)
 }

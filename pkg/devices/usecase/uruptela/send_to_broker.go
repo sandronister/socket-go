@@ -1,22 +1,23 @@
-package handler
+package uruptela
 
 import (
 	"fmt"
 	"log"
 	"time"
 
-	"github.com/sandronister/go_broker/pkg/broker/types"
+	"gitlab.com/gobrax-dev/gobrax-tool/broker/types"
 )
 
-func (h *TcpHandler) SendMessage(msg []byte) {
+func (u *UseRuptela) SendMessage(msg []byte) {
 	payload := &types.Message{
-		Value:     []byte(msg),
+		Value:     msg,
 		Key:       []byte(fmt.Sprintf("%d", time.Now().Unix())),
 		Timestamp: time.Now(),
 	}
 
 	if len(msg) != 0 {
-		err := h.broker.Producer(payload)
+		err := u.broker.Producer(payload, 1)
+
 		if err != nil {
 			log.Println(err)
 		}

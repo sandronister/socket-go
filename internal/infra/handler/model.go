@@ -4,7 +4,6 @@ import (
 	"net/netip"
 	"time"
 
-	"github.com/sandronister/go_broker/pkg/broker/types"
 	"github.com/sandronister/socket-go/pkg/devices/usecase"
 )
 
@@ -29,7 +28,6 @@ type IHandler interface {
 }
 
 type TcpHandler struct {
-	broker     types.IBroker
 	udevice    usecase.IDeviceUseCase
 	Retries    int
 	MaxRetries int
