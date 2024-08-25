@@ -13,6 +13,17 @@ import (
 	"gitlab.com/gobrax-dev/gobrax-tool/cloud/types"
 )
 
+func (u *UseRuptela) getPayloadObject(device devices.IDevice) *types.ObjectInput {
+	dataFolder := time.Now().Format("2006-01-02")
+	name := uuid.New().String()
+
+	return &types.ObjectInput{
+		Bucket: os.Getenv("BUCKET_NAME"),
+		Key:    fmt.Sprintf("ruptela/%s/%s/%s.bin", device.GetImei(), dataFolder, name),
+		Body:   bytes.NewReader(device.GetBuffer()),
+	}
+}
+
 func (u *UseRuptela) SendToBucket(device devices.IDevice) {
 	cloud, _ := factory.GetCloudInstance()
 
@@ -24,18 +35,11 @@ func (u *UseRuptela) SendToBucket(device devices.IDevice) {
 	if cloud != nil {
 		bucket := cloud.GetBucket()
 
-		dataFolder := time.Now().Format("2006-01-02")
-		name := uuid.New().String()
-
-		_, err := bucket.PutObject(&types.ObjectInput{
-			Bucket: os.Getenv("BUCKET_NAME"),
-			Key:    fmt.Sprintf("ruptela/%s/%s/%s.bin", device.GetImei(), dataFolder, name),
-			Body:   bytes.NewReader(device.GetBuffer()),
-		})
+		payload := u.getPayloadObject(device)
+		_, err := bucket.PutObject(payload)
 
 		if err != nil {
 			log.Println(err)
 		}
 	}
-
 }
