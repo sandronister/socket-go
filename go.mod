@@ -8,7 +8,6 @@ require (
 	github.com/google/uuid v1.4.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/joho/godotenv v1.5.1
-	github.com/sandronister/go_broker v1.2.0
 	github.com/spf13/viper v1.19.0
 	gitlab.com/gobrax-dev/gobrax-tool v1.3.1
 )
