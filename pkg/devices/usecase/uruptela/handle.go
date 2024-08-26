@@ -10,7 +10,7 @@ import (
 func (u *UseRuptela) Handle(buff []byte) *dto.DeviceResponse {
 	r := ruptela.New(buff)
 	r.Buffer = bytes.NewBuffer(buff)
-	behave, err := u.getParameter(r)
+	behave, err := u.ProcessBehave(r)
 	return &dto.DeviceResponse{
 		Error:          err,
 		Ack:            r.Ack,

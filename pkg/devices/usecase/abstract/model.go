@@ -1,9 +1,9 @@
 package abstract
 
 import (
-	"github.com/sandronister/go_broker/pkg/broker/types"
 	"github.com/sandronister/socket-go/pkg/devices/repositories"
 	"github.com/sandronister/socket-go/pkg/devices/service"
+	"gitlab.com/gobrax-dev/gobrax-tool/broker/types"
 )
 
 type AbstractUseCase struct {

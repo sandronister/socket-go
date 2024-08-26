@@ -22,15 +22,12 @@ func (s *Server) Start() {
 
 	for {
 		s.conn, err = listener.AcceptTCP()
-
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		s.conn.SetDeadline(time.Now().Add(10 * time.Second))
-		for range 100 {
-			go s.ChangeState()
-		}
+		s.Handle()
 
 	}
 }

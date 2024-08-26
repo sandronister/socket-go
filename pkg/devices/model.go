@@ -24,4 +24,7 @@ type IDevice interface {
 	ProcessDTC() *customerrors.Error
 	ProcessExtended() *customerrors.Error
 	SetSuccess(bool)
+	GetImei() string
+	GetBuffer() []byte
+	ToBytes() ([]byte, error)
 }
