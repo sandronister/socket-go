@@ -9,7 +9,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/sandronister/socket-go/pkg/devices"
-	"gitlab.com/gobrax-dev/gobrax-tool/cloud/factory"
 	"gitlab.com/gobrax-dev/gobrax-tool/cloud/types"
 )
 
@@ -25,21 +24,14 @@ func (u *UseRuptela) getPayloadObject(device devices.IDevice) *types.ObjectInput
 }
 
 func (u *UseRuptela) SendToBucket(device devices.IDevice) {
-	cloud, _ := factory.GetCloudInstance()
 
-	if cloud == nil {
-		log.Println("Cloud is not initialized")
-		panic("Cloud is not initialized")
+	bucket := u.cloud.GetBucket()
+
+	payload := u.getPayloadObject(device)
+	_, err := bucket.PutObject(payload)
+
+	if err != nil {
+		log.Println(err)
 	}
 
-	if cloud != nil {
-		bucket := cloud.GetBucket()
-
-		payload := u.getPayloadObject(device)
-		_, err := bucket.PutObject(payload)
-
-		if err != nil {
-			log.Println(err)
-		}
-	}
 }

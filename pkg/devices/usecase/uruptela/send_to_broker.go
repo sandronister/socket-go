@@ -16,7 +16,7 @@ func (u *UseRuptela) SendMessage(msg []byte) {
 	}
 
 	if len(msg) != 0 {
-		err := u.broker.Producer(payload, 1)
+		err := u.Broker.Producer(payload, 3)
 
 		if err != nil {
 			log.Println(err)
