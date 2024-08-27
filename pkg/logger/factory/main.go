@@ -2,11 +2,13 @@ package factory
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/sandronister/socket-go/pkg/logger/sugar"
 	"github.com/sandronister/socket-go/pkg/logger/types"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 type LoggerType string
@@ -15,13 +17,37 @@ const (
 	Sugar LoggerType = "sugar"
 )
 
-func newSugar(pattern string) (types.ILogger, error) {
+func createIOFile(pattern string) (string, error) {
 	timePattern := time.Now().Format("2006-01-02")
-	fileName := fmt.Sprintf("%s/%s.log", pattern, timePattern)
+	fileName := fmt.Sprintf("logs/%s-%s.log", pattern, timePattern)
+
+	if _, err := os.Stat("logs"); os.IsNotExist(err) {
+		if err := os.MkdirAll("logs", os.ModePerm); err != nil {
+			return "", err
+		}
+	}
+
+	if _, err := os.Stat(fileName); os.IsNotExist(err) {
+		if _, err := os.Create(fileName); err != nil {
+			return "", err
+		}
+	}
+
+	return fileName, nil
+}
+
+func newSugar(pattern string) (types.ILogger, error) {
+	fileName, err := createIOFile(pattern)
+
+	if err != nil {
+		return nil, err
+	}
 
 	config := zap.NewProductionConfig()
 	config.OutputPaths = []string{fileName}
-	logger, err := config.Build()
+	config.EncoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
+	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	logger, err := config.Build(zap.AddCallerSkip(1))
 
 	if err != nil {
 		return nil, err
