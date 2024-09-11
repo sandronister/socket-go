@@ -7,8 +7,6 @@ import (
 	"github.com/sandronister/socket-go/pkg/devices/usecase"
 )
 
-const bufferMaxSize = 1024
-
 type AddrPortInterface interface {
 	String() string
 	Addr() netip.Addr
