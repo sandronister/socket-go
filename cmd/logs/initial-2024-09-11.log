@@ -1,0 +1,2 @@
+{"level":"info","ts":"2024-09-11T08:57:28.747-0300","caller":"cmd/main.go:19","msg":"Starting server"}
+{"level":"info","ts":"2024-09-11T08:59:38.109-0300","caller":"cmd/main.go:19","msg":"Starting server"}
