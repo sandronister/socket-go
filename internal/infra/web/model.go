@@ -3,7 +3,6 @@ package web
 import (
 	"net"
 
-	"github.com/sandronister/socket-go/internal/dto"
 	"github.com/sandronister/socket-go/internal/infra/handler"
 )
 
@@ -19,11 +18,8 @@ const (
 )
 
 type Server struct {
-	host      string
-	port      string
-	conn      *net.TCPConn
-	state     ProtocolStates
-	nextState ProtocolStates
-	handler   handler.IHandler
-	response  *dto.DeviceResponse
+	host    string
+	port    string
+	conn    *net.TCPConn
+	handler handler.IHandler
 }

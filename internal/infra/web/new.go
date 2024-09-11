@@ -8,10 +8,8 @@ import (
 
 func NewServer(handler handler.IHandler) *Server {
 	return &Server{
-		host:      os.Getenv("SOCKET_HOST"),
-		port:      os.Getenv("SOCKET_PORT"),
-		state:     STATE_SET_TIMEOUT,
-		nextState: STATE_SET_TIMEOUT,
-		handler:   handler,
+		host:    os.Getenv("SOCKET_HOST"),
+		port:    os.Getenv("SOCKET_PORT"),
+		handler: handler,
 	}
 }

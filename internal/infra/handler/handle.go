@@ -1,11 +1,6 @@
 package handler
 
-import (
-	"github.com/sandronister/socket-go/internal/dto"
-)
-
-var i int = 1
-
-func (h *TcpHandler) Handle() *dto.DeviceResponse {
-	return h.udevice.Handle(h.ReadBuffer)
+func (h *TcpHandler) Handle(conn TCPAddrInterface, item []byte) {
+	response := h.udevice.Handle(item)
+	conn.Write(response.Ack)
 }
