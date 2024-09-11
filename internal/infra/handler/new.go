@@ -2,7 +2,7 @@ package handler
 
 import "github.com/sandronister/socket-go/pkg/devices/usecase"
 
-func NewTcpHandler(device usecase.IDeviceUseCase, maxRetries int) *TcpHandler {
+func NewTcpHandler(device usecase.IDeviceUseCase, maxRetries int) IHandler {
 	return &TcpHandler{
 		udevice:    device,
 		MaxRetries: maxRetries,

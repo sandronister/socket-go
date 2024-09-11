@@ -18,10 +18,8 @@ const (
 )
 
 type Server struct {
-	host      string
-	port      string
-	conn      *net.TCPConn
-	state     ProtocolStates
-	nextState ProtocolStates
-	handler   handler.IHandler
+	host    string
+	port    string
+	conn    *net.TCPConn
+	handler handler.IHandler
 }
