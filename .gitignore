@@ -1,4 +1,4 @@
 .env
 .json
-./cmd/logs/.*
+*.log
 
